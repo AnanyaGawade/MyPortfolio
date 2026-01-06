@@ -8,6 +8,34 @@ import AiAssistant from './components/AiAssistant';
 import Experience from './components/Experience';
 import { PROFILE } from './constants';
 
+const AnimatedDivider: React.FC<{ type: 'top' | 'bottom', id: string }> = ({ type, id }) => {
+  const isTop = type === 'top';
+  // Wave path: organic diagonal wave
+  const path = isTop 
+    ? "M0 0 H1440 V0 C1080 30 360 100 0 120 Z" 
+    : "M0 120 H1440 V120 C1080 90 360 20 0 0 Z";
+  
+  const linePath = isTop 
+    ? "M1440 0 C1080 30 360 100 0 120" 
+    : "M1440 120 C1080 90 360 20 0 0";
+
+  return (
+    <div className={isTop ? "section-divider-top" : "section-divider-bottom"}>
+      <svg className="w-full h-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id={`grad-${id}`} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" className="gradient-sweep" />
+            <stop offset="50%" stopColor="#3b82f6" />
+            <stop offset="100%" className="gradient-sweep" />
+          </linearGradient>
+        </defs>
+        <path d={path} className="divider-path-fill" />
+        <path d={linePath} className="divider-path-line" stroke={`url(#grad-${id})`} />
+      </svg>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHireModalOpen, setIsHireModalOpen] = useState(false);
@@ -65,12 +93,12 @@ const App: React.FC = () => {
         {/* HERO SECTION */}
         <section id="hero" className="snap-section reveal-section">
           <Hero />
-          <div className="section-divider-bottom"></div>
+          <AnimatedDivider type="bottom" id="hero-b" />
         </section>
 
         {/* ABOUT SECTION */}
         <section id="about" className="snap-section reveal-section">
-          <div className="section-divider-top"></div>
+          <AnimatedDivider type="top" id="about-t" />
           <div className="max-w-7xl mx-auto px-6 w-full relative z-10 flex items-center justify-center pt-24 pb-12">
             <div className="glass-panel w-full max-w-6xl rounded-[3rem] p-8 md:p-14 flex flex-col md:flex-row items-center gap-12 md:gap-20 border-white/10 shadow-3xl">
               <div className="md:w-1/2 content-slip">
@@ -111,45 +139,45 @@ const App: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="section-divider-bottom"></div>
+          <AnimatedDivider type="bottom" id="about-b" />
         </section>
 
         {/* SKILLS SECTION */}
         <section id="skills" className="snap-section reveal-section">
-          <div className="section-divider-top"></div>
+          <AnimatedDivider type="top" id="skills-t" />
           <div className="max-w-7xl mx-auto px-6 w-full relative z-10 flex items-center justify-center pt-24 pb-12">
             <div className="glass-panel w-full max-w-6xl rounded-[3rem] p-8 md:p-12 border-white/10 shadow-3xl overflow-hidden">
               <Skills />
             </div>
           </div>
-          <div className="section-divider-bottom"></div>
+          <AnimatedDivider type="bottom" id="skills-b" />
         </section>
         
         {/* PROJECTS SECTION */}
         <section id="projects" className="snap-section reveal-section">
-          <div className="section-divider-top"></div>
+          <AnimatedDivider type="top" id="projects-t" />
           <div className="max-w-7xl mx-auto px-6 w-full relative z-10 flex items-center justify-center pt-24 pb-12">
             <div className="glass-panel w-full max-w-6xl rounded-[3rem] overflow-hidden border-white/10 shadow-3xl">
               <Projects />
             </div>
           </div>
-          <div className="section-divider-bottom"></div>
+          <AnimatedDivider type="bottom" id="projects-b" />
         </section>
 
         {/* EXPERIENCE/JOURNEY SECTION */}
         <section id="experience" className="snap-section reveal-section">
-          <div className="section-divider-top"></div>
+          <AnimatedDivider type="top" id="exp-t" />
           <div className="max-w-7xl mx-auto px-6 w-full relative z-10 flex items-center justify-center pt-24 pb-12">
             <div className="glass-panel w-full max-w-6xl rounded-[3rem] p-8 md:p-12 border-white/10 shadow-3xl max-h-[80vh] overflow-y-auto">
               <Experience />
             </div>
           </div>
-          <div className="section-divider-bottom"></div>
+          <AnimatedDivider type="bottom" id="exp-b" />
         </section>
 
         {/* CONTACT SECTION */}
         <section id="contact" className="snap-section reveal-section">
-           <div className="section-divider-top"></div>
+           <AnimatedDivider type="top" id="contact-t" />
            <div className="max-w-7xl mx-auto px-6 w-full relative z-10 flex items-center justify-center pt-24 pb-12">
              <div className="glass-panel w-full max-w-4xl rounded-[3rem] p-12 md:p-20 border-white/10 shadow-3xl text-center content-slip">
                <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight signature-line">Let's Connect</h2>

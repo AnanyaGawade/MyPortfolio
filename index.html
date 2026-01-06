@@ -111,28 +111,46 @@
             justify-content: center;
         }
 
-        .section-divider-top {
+        /* Animated Divider Styling */
+        .section-divider-top, .section-divider-bottom {
             position: absolute;
-            top: 0;
             left: 0;
             width: 100%;
-            height: 12vh;
-            background: var(--bg-color);
-            clip-path: polygon(0 0, 100% 0, 0 100%);
+            height: 15vh;
             z-index: 5;
             pointer-events: none;
+            overflow: visible;
         }
 
-        .section-divider-bottom {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 12vh;
-            background: var(--bg-color);
-            clip-path: polygon(0 100%, 100% 100%, 100% 0);
-            z-index: 5;
-            pointer-events: none;
+        .section-divider-top { top: -1px; }
+        .section-divider-bottom { bottom: -1px; }
+
+        .divider-path-fill {
+            fill: var(--bg-color);
+        }
+
+        .divider-path-line {
+            fill: none;
+            stroke-width: 3;
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: draw-divider 10s linear infinite;
+        }
+
+        @keyframes draw-divider {
+            0% { stroke-dashoffset: 2000; }
+            50% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -2000; }
+        }
+
+        .gradient-sweep {
+            animation: sweep 8s linear infinite;
+        }
+
+        @keyframes sweep {
+            0% { stop-color: #3b82f6; }
+            50% { stop-color: #10b981; }
+            100% { stop-color: #3b82f6; }
         }
 
         .signature-line {
