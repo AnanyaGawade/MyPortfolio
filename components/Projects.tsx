@@ -96,7 +96,7 @@ const Projects: React.FC = () => {
                 pointerEvents: Math.abs(offset) > 2 ? 'none' : 'auto'
               }}
             >
-              <div className={`glass-panel rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-500 ${
+              <div className={`glass-panel rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-500 group/card ${
                 isActive ? 'border-blue-500/40 scale-105 shadow-blue-500/10' : 'border-white/5 saturate-50 grayscale-[0.2]'
               }`}>
                 <div className={`h-10 flex items-center px-6 border-b transition-colors ${
@@ -111,22 +111,36 @@ const Projects: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="relative aspect-video overflow-hidden">
+                <div className="relative aspect-video overflow-hidden group/img">
                   <img 
                     src={project.imageUrl} 
                     alt={project.title} 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/card:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
                   
+                  {/* Subtle Gradient Overlays */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-60"></div>
+                  
+                  {/* Hover Overlay with Title */}
+                  <div className="absolute inset-0 bg-blue-900/40 backdrop-blur-[2px] opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-end p-8">
+                    <div className="transform translate-y-4 group-hover/card:translate-y-0 transition-transform duration-500 ease-out text-center">
+                       <span className="block text-white font-bold text-xl tracking-tighter uppercase mb-1">
+                         {project.title}
+                       </span>
+                       <span className="block text-blue-400 font-mono text-[8px] tracking-[0.3em] uppercase">
+                         View Module Details
+                       </span>
+                    </div>
+                  </div>
+
                   {!isActive && (
-                    <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px] flex items-center justify-center">
+                    <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px] flex items-center justify-center group-hover/card:opacity-0 transition-opacity duration-300">
                       <span className="text-[9px] font-mono text-white/30 uppercase tracking-[0.4em]">STANDBY</span>
                     </div>
                   )}
 
                   {isActive && (
-                    <div className="absolute inset-0 pointer-events-none opacity-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]"></div>
+                    <div className="absolute inset-0 pointer-events-none opacity-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] group-hover/card:opacity-5 transition-opacity"></div>
                   )}
                 </div>
 

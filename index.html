@@ -48,7 +48,7 @@
             pointer-events: none;
         }
 
-        /* Neural Flux Background - New & Creative */
+        /* Neural Flux Background */
         .neural-flux {
             position: fixed;
             inset: 0;
@@ -227,6 +227,25 @@
             100% { top: 100%; }
         }
 
+        /* Tech Mesh Animation */
+        .tech-mesh-bg {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background-image: 
+                radial-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.02) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(59, 130, 246, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px, 80px 80px, 80px 80px;
+            mask-image: linear-gradient(to bottom, black, transparent);
+            animation: tech-pulse 20s linear infinite;
+        }
+
+        @keyframes tech-pulse {
+            0% { background-position: 0 0; }
+            100% { background-position: 80px 80px; }
+        }
+
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
     </style>
@@ -254,13 +273,11 @@
     <div class="vignette"></div>
     <div id="root"></div>
     <script>
-        // Track mouse for glow
         document.addEventListener('mousemove', (e) => {
             document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
             document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
         });
 
-        // Click ripple effect
         document.addEventListener('mousedown', (e) => {
             const ripple = document.createElement('div');
             ripple.className = 'sonar-ripple';

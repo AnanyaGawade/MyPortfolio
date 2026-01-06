@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 
 interface NavbarProps {
-  onHireClick?: () => void;
+  // onHireClick prop removed
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onHireClick }) => {
+const Navbar: React.FC<NavbarProps> = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
 
@@ -80,10 +80,8 @@ const Navbar: React.FC<NavbarProps> = ({ onHireClick }) => {
               </a>
             ))}
           </div>
-
-          <button onClick={onHireClick} className="px-5 py-2 bg-white text-slate-950 text-[10px] font-bold rounded-full hover:bg-blue-400 transition-all uppercase tracking-widest whitespace-nowrap">
-            interested to hire me?
-          </button>
+          
+          {/* Button removed */}
         </div>
       </div>
     </nav>

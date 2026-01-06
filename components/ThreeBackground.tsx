@@ -11,18 +11,22 @@ const PointsMaterial = 'pointsMaterial' as any;
 const Mesh = 'mesh' as any;
 const BoxGeometry = 'boxGeometry' as any;
 const MeshPhysicalMaterial = 'meshPhysicalMaterial' as any;
-const TorusGeometry = 'torusGeometry' as any;
+const IcosahedronGeometry = 'icosahedronGeometry' as any;
 const AmbientLight = 'ambientLight' as any;
 const PointLight = 'pointLight' as any;
+const Group = 'group' as any;
 
-const DataGrid = () => {
-  const count = 3000;
+const NeuralNetwork = () => {
+  const count = 2000;
   const pointsData = useMemo(() => {
     const p = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      p[i * 3] = (Math.random() - 0.5) * 100;
-      p[i * 3 + 1] = (Math.random() - 0.5) * 100;
-      p[i * 3 + 2] = (Math.random() - 0.5) * 100;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+      const r = 30 + Math.random() * 20;
+      p[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      p[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      p[i * 3 + 2] = r * Math.cos(phi);
     }
     return p;
   }, []);
@@ -31,8 +35,8 @@ const DataGrid = () => {
   
   useFrame((state) => {
     if (ref.current) {
-      ref.current.rotation.y = state.clock.getElapsedTime() * 0.01;
-      ref.current.rotation.z = Math.sin(state.clock.getElapsedTime() * 0.1) * 0.05;
+      ref.current.rotation.y = state.clock.getElapsedTime() * 0.05;
+      ref.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.1) * 0.1;
     }
   });
 
@@ -47,10 +51,10 @@ const DataGrid = () => {
         />
       </BufferGeometry>
       <PointsMaterial 
-        size={0.06} 
+        size={0.08} 
         color="#3B82F6" 
         transparent 
-        opacity={0.3} 
+        opacity={0.4} 
         sizeAttenuation={true}
         blending={THREE.AdditiveBlending}
       />
@@ -58,77 +62,79 @@ const DataGrid = () => {
   );
 };
 
-const LogicFragments = () => {
+const DataCore = () => {
+  const meshRef = useRef<THREE.Mesh>(null!);
+  const outerRef = useRef<THREE.Mesh>(null!);
+
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    if (meshRef.current) {
+      meshRef.current.rotation.y = time * 0.2;
+      meshRef.current.rotation.z = time * 0.15;
+    }
+    if (outerRef.current) {
+      outerRef.current.rotation.y = -time * 0.1;
+      outerRef.current.rotation.x = time * 0.05;
+    }
+  });
+
   return (
-    <>
-      {/* Floating Logic Gates / Microchip Dies */}
-      <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-        <Mesh position={[-15, 12, -20]}>
-          <BoxGeometry args={[6, 8, 0.2]} />
+    <Group>
+      <Float speed={3} rotationIntensity={1} floatIntensity={2}>
+        <Mesh ref={meshRef}>
+          <IcosahedronGeometry args={[10, 2]} />
           <MeshPhysicalMaterial 
             color="#3B82F6" 
-            transmission={0.9} 
-            thickness={1} 
-            roughness={0.1} 
+            wireframe 
             transparent 
             opacity={0.1}
+            emissive="#3B82F6"
+            emissiveIntensity={0.5}
           />
         </Mesh>
       </Float>
-      
-      <Float speed={1.5} rotationIntensity={2} floatIntensity={1}>
-        <Mesh position={[22, -10, -15]}>
-          <BoxGeometry args={[10, 4, 0.2]} />
-          <MeshPhysicalMaterial 
-            color="#10B981" 
-            transmission={0.8} 
-            thickness={2} 
-            roughness={0} 
-            transparent 
-            opacity={0.05}
-          />
-        </Mesh>
-      </Float>
-
-      <Float speed={1} rotationIntensity={0.5} floatIntensity={0.5}>
-        <Mesh position={[0, -20, -30]}>
-          <TorusGeometry args={[15, 0.1, 16, 100]} />
-          <MeshPhysicalMaterial color="#3B82F6" wireframe transparent opacity={0.05} />
-        </Mesh>
-      </Float>
-    </>
+      <Mesh ref={outerRef}>
+        <IcosahedronGeometry args={[25, 1]} />
+        <MeshPhysicalMaterial 
+          color="#10B981" 
+          wireframe 
+          transparent 
+          opacity={0.02}
+        />
+      </Mesh>
+    </Group>
   );
 };
 
 const ThreeBackground: React.FC = () => {
   return (
     <div className="absolute inset-0 -z-20 pointer-events-none">
-      <Canvas camera={{ position: [0, 0, 50], fov: 60 }}>
-        <AmbientLight intensity={0.6} />
-        <PointLight position={[20, 20, 20]} intensity={1.5} color="#3B82F6" />
-        <PointLight position={[-20, -20, -20]} intensity={1} color="#10B981" />
+      <Canvas camera={{ position: [0, 0, 70], fov: 60 }}>
+        <AmbientLight intensity={0.4} />
+        <PointLight position={[40, 40, 40]} intensity={1.5} color="#3B82F6" />
+        <PointLight position={[-40, -40, -40]} intensity={1} color="#10B981" />
         
         <Stars 
-          radius={200} 
-          depth={60} 
-          count={6000} 
-          factor={5} 
+          radius={150} 
+          depth={50} 
+          count={4000} 
+          factor={4} 
           saturation={0} 
           fade 
-          speed={0.3} 
+          speed={0.5} 
         />
         
         <Sparkles 
-          count={150} 
-          scale={[60, 60, 60]} 
-          size={1.5} 
-          speed={0.2} 
-          opacity={0.15} 
+          count={100} 
+          scale={[80, 80, 80]} 
+          size={2} 
+          speed={0.4} 
+          opacity={0.1} 
           color="#93C5FD" 
         />
         
-        <DataGrid />
-        <LogicFragments />
+        <NeuralNetwork />
+        <DataCore />
       </Canvas>
     </div>
   );
