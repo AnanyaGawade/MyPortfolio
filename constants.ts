@@ -66,36 +66,26 @@ export const PROFILE: ProfileData = {
     {
       id: "edu1",
       institution: "PCET's Pimpri Chinchwad College of Engineering, Pune",
-      degree: "B.Tech in Computer Engineering (Third Year)",
-      period: "2022 - 2026",
+      degree: "B.Tech in Computer Engineering",
+      period: "2023 - 2027",
       gpa: "8.0 CGPA",
-      highlights: [
-        "Specializing in Software Development & Data Structures",
-        "Active member of coding clubs",
-        "Python for Data Science (NPTEL Certified)"
-      ]
+      highlights: []
     },
     {
       id: "edu2",
       institution: "GeetaMata Junior College",
       degree: "12th State Board",
-      period: "2020 - 2022",
+      period: "2021 - 2023",
       gpa: "84.5%",
-      highlights: [
-        "Academic excellence in Science & Mathematics",
-        "Mastering Data Structures using C and CPP (Udemy Certified)"
-      ]
+      highlights: []
     },
     {
       id: "edu3",
       institution: "Jnana Prabodhini Nigdi Gurukul",
       degree: "10th State Board",
-      period: "Completed",
+      period: "2021 (Passout)",
       gpa: "92.80%",
-      highlights: [
-        "Strong foundation in logical reasoning and academics",
-        "Schooling with focus on holistic development"
-      ]
+      highlights: []
     }
   ]
 };

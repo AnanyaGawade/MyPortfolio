@@ -31,7 +31,7 @@
             inset: 0;
             z-index: 50;
             pointer-events: none;
-            opacity: 0.04;
+            opacity: 0.03;
             background-image: url("https://grainy-gradients.vercel.app/noise.svg");
         }
 
@@ -39,58 +39,77 @@
         .mouse-glow {
             position: fixed;
             inset: 0;
-            z-index: -3;
+            z-index: -1;
             background: radial-gradient(
-                circle 800px at var(--mouse-x) var(--mouse-y),
-                rgba(59, 130, 246, 0.12),
+                circle 700px at var(--mouse-x) var(--mouse-y),
+                rgba(59, 130, 246, 0.15),
                 transparent 80%
             );
             pointer-events: none;
         }
 
-        /* Tech Background Elements */
-        .tech-grid {
+        /* Neural Flux Background - New & Creative */
+        .neural-flux {
             position: fixed;
             inset: 0;
-            background-image: 
-                linear-gradient(rgba(59, 130, 246, 0.07) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.07) 1px, transparent 1px);
-            background-size: 60px 60px;
+            z-index: -4;
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(16, 185, 129, 0.04) 0%, transparent 40%);
             pointer-events: none;
-            z-index: -5;
         }
 
-        /* Vignette */
+        .neural-flux::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 100%);
+            opacity: 0.3;
+        }
+
+        /* Floating Data Nodes */
+        .data-stream {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='0.5' fill='rgba(59, 130, 246, 0.2)'/%3E%3C/svg%3E");
+            background-size: 50px 50px;
+            animation: drift 100s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes drift {
+            from { background-position: 0 0; }
+            to { background-position: 1000px 1000px; }
+        }
+
+        /* Sonar Pulse Ripple */
+        .sonar-ripple {
+            position: fixed;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            pointer-events: none;
+            z-index: 100;
+            transform: translate(-50%, -50%);
+            animation: sonar-expand 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes sonar-expand {
+            from { width: 0; height: 0; opacity: 1; }
+            to { width: 500px; height: 500px; opacity: 0; }
+        }
+
+        /* Vignette Overlay */
         .vignette {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at center, transparent 20%, rgba(2, 6, 23, 0.8) 100%);
+            background: radial-gradient(circle at center, transparent 20%, rgba(2, 6, 23, 0.9) 100%);
             z-index: -2;
             pointer-events: none;
-        }
-
-        /* Floating Tech Runes */
-        .runes {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -4;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            color: rgba(59, 130, 246, 0.05);
-            user-select: none;
-            overflow: hidden;
-        }
-
-        .rune-column {
-            position: absolute;
-            top: -20%;
-            animation: rune-fall linear infinite;
-        }
-
-        @keyframes rune-fall {
-            from { transform: translateY(0); }
-            to { transform: translateY(120vh); }
         }
 
         .snap-container {
@@ -111,12 +130,11 @@
             justify-content: center;
         }
 
-        /* Animated Divider Styling */
         .section-divider-top, .section-divider-bottom {
             position: absolute;
             left: 0;
             width: 100%;
-            height: 15vh;
+            height: 12vh;
             z-index: 5;
             pointer-events: none;
             overflow: visible;
@@ -131,20 +149,20 @@
 
         .divider-path-line {
             fill: none;
-            stroke-width: 3;
+            stroke-width: 2;
             stroke-dasharray: 2000;
             stroke-dashoffset: 2000;
-            animation: draw-divider 10s linear infinite;
+            animation: draw-divider 15s linear infinite;
+            opacity: 0.4;
         }
 
         @keyframes draw-divider {
             0% { stroke-dashoffset: 2000; }
-            50% { stroke-dashoffset: 0; }
             100% { stroke-dashoffset: -2000; }
         }
 
         .gradient-sweep {
-            animation: sweep 8s linear infinite;
+            animation: sweep 12s linear infinite;
         }
 
         @keyframes sweep {
@@ -165,10 +183,9 @@
             bottom: 0;
             left: 0.8em;
             width: 0;
-            height: 3px;
+            height: 2px;
             background: linear-gradient(90deg, #3b82f6, #10b981);
-            border-radius: 2px;
-            transition: width 1s var(--ease-out-expo);
+            transition: width 1.2s var(--ease-out-expo);
         }
         
         .reveal-section.active .signature-line::after {
@@ -177,8 +194,8 @@
 
         .content-slip {
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s var(--ease-out-expo);
+            transform: translateY(30px);
+            transition: all 1s var(--ease-out-expo);
         }
         
         .reveal-section.active .content-slip {
@@ -187,28 +204,10 @@
         }
 
         .glass-panel {
-            background: rgba(15, 23, 42, 0.45);
-            backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 15px 50px -10px rgba(0, 0, 0, 0.6);
-        }
-
-        .hologram-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 2.5rem;
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.2);
-        }
-
-        .hologram-container::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(59, 130, 246, 0.08) 50%), 
-                        linear-gradient(90deg, rgba(59, 130, 246, 0.03), rgba(16, 185, 129, 0.03));
-            background-size: 100% 4px, 4px 100%;
-            z-index: 10;
-            pointer-events: none;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(32px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: 0 25px 70px -15px rgba(0, 0, 0, 0.8);
         }
 
         .hologram-scan {
@@ -217,9 +216,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.3), transparent);
+            background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.1), transparent);
             z-index: 11;
-            animation: scan 4s linear infinite;
+            animation: scan 8s linear infinite;
             pointer-events: none;
         }
 
@@ -228,21 +227,8 @@
             100% { top: 100%; }
         }
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-
-        .scanline {
-            width: 100%;
-            height: 1px;
-            background: rgba(59, 130, 246, 0.15);
-            position: absolute;
-            z-index: 50;
-            animation: scanline 12s linear infinite;
-        }
-        @keyframes scanline {
-            0% { top: 0%; }
-            100% { top: 100%; }
-        }
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
     </style>
 <script type="importmap">
 {
@@ -262,11 +248,10 @@
 </head>
 <body class="antialiased">
     <div class="grain"></div>
+    <div class="neural-flux"></div>
+    <div class="data-stream"></div>
     <div class="mouse-glow"></div>
     <div class="vignette"></div>
-    <div class="tech-grid"></div>
-    <div class="runes" id="rune-container"></div>
-    <div class="scanline"></div>
     <div id="root"></div>
     <script>
         // Track mouse for glow
@@ -275,22 +260,15 @@
             document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
         });
 
-        // Initialize background runes
-        const runeContainer = document.getElementById('rune-container');
-        const runeChars = "01ABCDEFxUI";
-        for(let i = 0; i < 20; i++) {
-            const column = document.createElement('div');
-            column.className = 'rune-column';
-            column.style.left = Math.random() * 100 + '%';
-            column.style.animationDuration = (15 + Math.random() * 20) + 's';
-            column.style.animationDelay = (Math.random() * -20) + 's';
-            let content = "";
-            for(let j = 0; j < 50; j++) {
-                content += runeChars.charAt(Math.floor(Math.random() * runeChars.length)) + "<br>";
-            }
-            column.innerHTML = content;
-            runeContainer.appendChild(column);
-        }
+        // Click ripple effect
+        document.addEventListener('mousedown', (e) => {
+            const ripple = document.createElement('div');
+            ripple.className = 'sonar-ripple';
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            document.body.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 1200);
+        });
     </script>
 </body>
 </html>

@@ -41,7 +41,7 @@ const Experience: React.FC = () => {
           </div>
         </div>
 
-        {/* Academic Column */}
+        {/* Academic Column - Updated Status Logic */}
         <div className="space-y-10">
           <div className="flex items-center gap-4 mb-6">
             <div className="w-8 h-px bg-emerald-500"></div>
@@ -49,29 +49,40 @@ const Experience: React.FC = () => {
           </div>
           
           <div className="space-y-12">
-            {PROFILE.education.map((edu) => (
-              <div key={edu.id} className="relative pl-6 group">
-                <div className="absolute left-0 top-0 bottom-0 w-px bg-slate-800 group-hover:bg-emerald-500/50 transition-colors"></div>
-                <div className="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-slate-800 group-hover:bg-emerald-500 transition-colors shadow-[0_0_8px_rgba(16,185,129,0.3)]"></div>
-                
-                <div className="flex justify-between items-start mb-2">
-                  <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">{edu.period}</span>
-                  <div className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-[9px] font-bold rounded-full border border-emerald-500/20">
-                    {edu.gpa}
+            {PROFILE.education.map((edu) => {
+              const isBTech = edu.id === 'edu1';
+              return (
+                <div key={edu.id} className="relative pl-8 group pb-4">
+                  <div className="absolute left-0 top-0 bottom-0 w-px bg-slate-800 group-hover:bg-emerald-500/50 transition-colors"></div>
+                  <div className={`absolute left-[-5px] top-2 w-[11px] h-[11px] rounded-sm bg-slate-800 transition-colors rotate-45 ${
+                    isBTech ? 'group-hover:bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.3)]' : 'group-hover:bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.3)]'
+                  }`}></div>
+                  
+                  <div className="flex justify-between items-start mb-3">
+                    <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">{edu.period}</span>
+                    <div className={`px-3 py-1 text-[10px] font-bold rounded border font-mono ${
+                      isBTech ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                    }`}>
+                      {edu.gpa}
+                    </div>
+                  </div>
+                  
+                  <h4 className={`text-xl font-bold text-white mb-1 transition-colors ${
+                    isBTech ? 'group-hover:text-emerald-400' : 'group-hover:text-blue-400'
+                  }`}>{edu.degree}</h4>
+                  <p className="text-slate-400 text-sm font-light uppercase tracking-tight">{edu.institution}</p>
+                  
+                  <div className="mt-4 flex items-center gap-2">
+                     <div className={`w-2 h-2 rounded-full border ${
+                       isBTech ? 'bg-emerald-500/20 border-emerald-500/40' : 'bg-blue-500/20 border-blue-500/40'
+                     }`}></div>
+                     <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">
+                       Status: {isBTech ? 'Active / Pursuing' : 'Completed / Qualified'}
+                     </span>
                   </div>
                 </div>
-                <h4 className="text-xl font-bold text-white mb-1">{edu.degree}</h4>
-                <p className="text-slate-400 text-sm font-light mb-4">{edu.institution}</p>
-                
-                <div className="flex flex-wrap gap-1.5">
-                  {edu.highlights.map((h, i) => (
-                    <span key={i} className="text-[8px] font-mono bg-white/5 px-2 py-1 rounded text-slate-500 border border-white/5">
-                      {h}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
